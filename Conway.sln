@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.10.34928.147
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Conway", "Conway\Conway.vcxproj", "{9EE8C14A-719E-41E4-A7EC-26F1504D6588}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x64 = Debug|x64
+		Release|x64 = Release|x64
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{9EE8C14A-719E-41E4-A7EC-26F1504D6588}.Debug|x64.ActiveCfg = Debug|x64
+		{9EE8C14A-719E-41E4-A7EC-26F1504D6588}.Debug|x64.Build.0 = Debug|x64
+		{9EE8C14A-719E-41E4-A7EC-26F1504D6588}.Release|x64.ActiveCfg = Release|x64
+		{9EE8C14A-719E-41E4-A7EC-26F1504D6588}.Release|x64.Build.0 = Release|x64
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {77C6509C-28A3-4893-903C-2169E494A951}
+	EndGlobalSection
+EndGlobal
