@@ -36,10 +36,11 @@ private:
 
 	int GetCellIndex(sf::Vector2f pos);
 
-	int CheckAlive(int v, int c, int r);
+	int CheckAlive(int v);
 
 
 	std::array<Cell_State, Grid_Height* Grid_Width> m_CellStates;
+	std::array<Cell_State, Grid_Height* Grid_Width> m_CellBuffer;
 	sf::VertexArray m_Vertecis;
 
 	sf::Vector2f MousePos = sf::Vector2f(0, 0);

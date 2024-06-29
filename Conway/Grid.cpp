@@ -101,38 +101,40 @@ int Grid::GetCellIndex(sf::Vector2f pos)
 	return pos.y * Grid_Width + pos.x;
 }
 
-int Grid::CheckAlive(int v, int c, int r) {
-	int aliveCounter = 0;
-	for (int p = -1; p < 2; p++) {
-		if (r + p < 0 || r + p >= Grid_Height) continue;
-		for (int q = -1; q < 2; q++) {
-			if (c + q < 0 || c + q >= Grid_Width) continue;
-			if (r == 0 && c == 0) continue;
-			int nV = v + p * Grid_Width + q;
-			if (m_CellStates[nV] == Alive)
-				aliveCounter++;
-		}
-	}
+bool isValid(int v) {
+	int x = v % Grid_Width, y = v / Grid_Width;
+
+	return (x >= 0 && x < Grid_Width) && (y >= 0 && y < Grid_Height);
+}
+
+int Grid::CheckAlive(int v) {
+	int nV, aliveCounter = 0;
+
+	if (isValid(nV = v - Grid_Width - 1)) aliveCounter += m_CellStates[nV] == Alive;
+	if (isValid(nV = v - Grid_Width)) aliveCounter += m_CellStates[nV] == Alive;
+	if (isValid(nV = v - Grid_Width + 1)) aliveCounter += m_CellStates[nV] == Alive;
+	if (isValid(nV = v - 1)) aliveCounter += m_CellStates[nV] == Alive;
+	if (isValid(nV = v + 1)) aliveCounter += m_CellStates[nV] == Alive;
+	if (isValid(nV = v + Grid_Width - 1)) aliveCounter += m_CellStates[nV] == Alive;
+	if (isValid(nV = v + Grid_Width)) aliveCounter += m_CellStates[nV] == Alive;
+	if (isValid(nV = v + Grid_Width + 1)) aliveCounter += m_CellStates[nV] == Alive;
+
 	return aliveCounter;
 }
 
 void Grid::StepSimulation()
 {
-	for (int r = 0; r < Grid_Height; r++)
-		for (int c = 0; c < Grid_Width; c++) {
-			int v = GetCellIndex(sf::Vector2f(c, r));
-			//std::cout << "Checking cell " << v << '\n';
-			int aliveCounter = CheckAlive(v, c, r);
+	for (int v = 0; v < Grid_Height * Grid_Width; v++) {
+		int aliveCounter = CheckAlive(v);
 
-			if (aliveCounter > 1) std::cout << "Cell at " << r << ", " << c << " has " << aliveCounter << " alive neighbors.\n";
- 
-			//if (m_CellStates[v] == Alive && (aliveCounter < 2 || aliveCounter > 3)) {
-			//	m_CellStates[v] = Dead;
-			//}
-			//else if (m_CellStates[v] == Dead && aliveCounter == 3) {
-			//	m_CellStates[v] = Alive;
-			//}
-			//SetCellColor(c, r, Cell_Colors[m_CellStates[v]]);
-		}
+		//if (aliveCounter > 1) std::cout << "Cell at " << v <<  " has " << aliveCounter << " alive neighbors.\n";
+		
+		if (aliveCounter == 3 && m_CellStates[v] == Dead) m_CellBuffer[v] = Alive;
+		else if ((aliveCounter < 2 || aliveCounter > 3) && m_CellStates[v] == Alive) m_CellBuffer[v] = Dead;
+		else m_CellBuffer[v] = m_CellStates[v];
+	}
+	m_CellStates.swap(m_CellBuffer);
+
+	for (int v = 0; v < Grid_Height * Grid_Width; v++) SetCellColor( v % Grid_Width, v / Grid_Width, Cell_Colors[m_CellStates[v]]);
 
 }
